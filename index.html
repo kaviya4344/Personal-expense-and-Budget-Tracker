@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Personal Expense Dashboard</h1>
+
+<div class="cards">
+    <div class="card"><h3>Total Income</h3><p>₹{{ "%.2f"|format(income) }}</p></div>
+    <div class="card"><h3>Total Expense</h3><p>₹{{ "%.2f"|format(expense) }}</p></div>
+    <div class="card"><h3>Balance</h3><p>₹{{ "%.2f"|format(balance) }}</p></div>
+    <div class="card"><h3>Monthly Budget</h3><p>₹{{ "%.2f"|format(budget) }}</p></div>
+</div>
+
+<div class="budget-info">
+    <h2>Budget Status</h2>
+    {% if remaining_budget >= 0 %}
+        <p>Remaining Budget: ₹{{ "%.2f"|format(remaining_budget) }}</p>
+    {% else %}
+        <p>Budget Exceeded By: ₹{{ "%.2f"|format(remaining_budget|abs) }}</p>
+    {% endif %}
+</div>
+
+<h2>Recent Transactions</h2>
+<table>
+<tr><th>Date</th><th>Type</th><th>Category</th><th>Amount</th><th>Description</th><th>Action</th></tr>
+{% for transaction in transactions %}
+<tr>
+<td>{{ transaction["date"] }}</td>
+<td>{{ transaction["transaction_type"] }}</td>
+<td>{{ transaction["category"] }}</td>
+<td>₹{{ "%.2f"|format(transaction["amount"]) }}</td>
+<td>{{ transaction["description"] }}</td>
+<td><a class="delete" href="/delete/{{ transaction['id'] }}">Delete</a></td>
+</tr>
+{% else %}
+<tr><td colspan="6">No transactions available.</td></tr>
+{% endfor %}
+</table>
+{% endblock %}

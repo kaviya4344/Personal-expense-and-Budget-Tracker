@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Set Monthly Budget</h1>
+<form method="POST">
+<label>Monthly Budget</label>
+<input type="number" name="amount" value="{{ budget }}" min="0" step="0.01" required>
+<button type="submit">Save Budget</button>
+</form>
+{% endblock %}
